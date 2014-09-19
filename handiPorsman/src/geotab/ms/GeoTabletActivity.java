@@ -1,4 +1,4 @@
-package geotab.ms;
+//package geotab.ms;
 //package org.mapsforge.applications.android.geotablet;
 //
 //import java.io.File;

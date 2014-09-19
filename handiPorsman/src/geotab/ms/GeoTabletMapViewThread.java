@@ -17,6 +17,7 @@ import org.mapsforge.core.Tile;
 
 import android.annotation.SuppressLint;
 import android.graphics.Point;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -65,6 +66,8 @@ public class GeoTabletMapViewThread extends Thread {
 		this.mapView = mapView;
 		mapView.setScaleX(scale);
 		mapView.setScaleY(scale);
+		
+		
 		// Création fichier log
 		try {
 			fw = new FileWriter("/sdcard/map/a.csv");
@@ -79,9 +82,10 @@ public class GeoTabletMapViewThread extends Thread {
 	@SuppressLint({ "NewApi", "NewApi" })
 	public void run(MotionEvent motionEvent) {
 		
+
+		
 		Log.i(" COORDINATE" , " X = " + motionEvent.getX());
 		Log.i(" COORDINATE" , " Y = " + motionEvent.getY());
-		
 		
 		if (mapView.mapviewer.mode.equals("2 Doigts")) {
 			try {

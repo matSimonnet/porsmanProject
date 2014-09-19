@@ -56,10 +56,11 @@ public class GeoTabletMapViewer extends MapActivity{
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().getDecorView().setSystemUiVisibility(View.STATUS_BAR_HIDDEN);
+        //getWindow().getDecorView().setSystemU2iVisibility(View.STATUS_BAR_HIDDEN);
 
 		// Init Text To Speech
 		initTextToSpeech();
+		
 		
 		
 		// Recuperation des informations de l'activity principale
@@ -136,8 +137,15 @@ public class GeoTabletMapViewer extends MapActivity{
 
 		setContentView(R.layout.main);
 		setContentView(mapView);
-		if (tts!=null)
-		tts.speak("bienvenue à Porsman sur le sentier cotier adapté de Plouarzel", TextToSpeech.QUEUE_FLUSH, null);
+		
+		try {
+			Thread.sleep(2000);
+			mapView.mapviewer.speak("coucou 2", "0f");
+			Thread.sleep(2000);
+			mapView.mapviewer.speak("coucou 2", "0f");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
 	}
 
@@ -178,9 +186,15 @@ public class GeoTabletMapViewer extends MapActivity{
 							// Vitesse voix
 							//tts.setSpeechRate(1.1f);
 						}
+
+							mapView.mapviewer.speak("Bienvenue sur le sentier côtier adapté de porsman. "
+									+ "l'échelle : 1 centimetre sur la carte correspond à 20 mètres. ", "0f");
 					}
+					
 				});
 			}
+			
+			
 		}
 		// Si les bibliotheques TTS n'existent pas on les installent
 		else {

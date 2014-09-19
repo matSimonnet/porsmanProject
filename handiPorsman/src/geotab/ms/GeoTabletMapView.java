@@ -7,6 +7,7 @@ import org.mapsforge.map.reader.MapDatabase;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.speech.tts.TextToSpeech;
 import android.view.MotionEvent;
 
 public class GeoTabletMapView extends MapView {
@@ -32,7 +33,7 @@ public class GeoTabletMapView extends MapView {
 			mapviewer = (GeoTabletMapViewer) context;
 			mySoundPool = new GeoTabletSoundPool(mapviewer);
 		}
-
+		
 		// Create Thread and start it
 		thread = new GeoTabletMapViewThread(this);
 		thread.start();
