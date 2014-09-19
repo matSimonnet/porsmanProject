@@ -173,10 +173,10 @@ public class GeoTabletMapViewer extends MapActivity{
 							//am.setStreamVolume(AudioManager.STREAM_MUSIC,amStreamMusicMaxVol, 0);
 
 							// Tonalite voix
-							tts.setPitch(0.8f);
+							//tts.setPitch(0.8f);
 
 							// Vitesse voix
-							tts.setSpeechRate(1.1f);
+							//tts.setSpeechRate(1.1f);
 						}
 					}
 				});
