@@ -172,12 +172,12 @@ public class GeoTabletMapViewer extends MapActivity{
 						if (status == TextToSpeech.SUCCESS) {
 							ttsIsInit = true;
 							// Selection langue
-							if (tts.isLanguageAvailable(Locale.FRANCE) >= 0)
-								tts.setLanguage(Locale.FRANCE);
+							//if (tts.isLanguageAvailable(Locale.FRANCE) >= 0)
+							//	tts.setLanguage(Locale.FRANCE);
 
 							// Volume TTS
-							AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-							int amStreamMusicMaxVol = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+							//AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+							//int amStreamMusicMaxVol = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 							//am.setStreamVolume(AudioManager.STREAM_MUSIC,amStreamMusicMaxVol, 0);
 
 							// Tonalite voix

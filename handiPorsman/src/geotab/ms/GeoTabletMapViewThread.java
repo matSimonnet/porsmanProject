@@ -67,34 +67,20 @@ public class GeoTabletMapViewThread extends Thread {
 		mapView.setScaleX(scale);
 		mapView.setScaleY(scale);
 		
-		
-		// Création fichier log
-		try {
-			fw = new FileWriter("/sdcard/map/a.csv");
-			pw = new PrintWriter(fw);
-
-		} catch (IOException e) {
-			Log.v("fichier", e.toString());
-			Log.v("fichier", "erreur crea fichier");
-		}
 	}
 
 	@SuppressLint({ "NewApi", "NewApi" })
 	public void run(MotionEvent motionEvent) {
-		
 
 		
-		Log.i(" COORDINATE" , " X = " + motionEvent.getX());
-		Log.i(" COORDINATE" , " Y = " + motionEvent.getY());
-		
 		if (mapView.mapviewer.mode.equals("2 Doigts")) {
-			try {
-				writeToCsv(sdf.format(Calendar.getInstance().getTime()),
-						motionEvent.getAction(), motionEvent.getX(),
-						motionEvent.getY());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+//			try {
+//				writeToCsv(sdf.format(Calendar.getInstance().getTime()),
+//						motionEvent.getAction(), motionEvent.getX(),
+//						motionEvent.getY());
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
 			
 			
 			int action = motionEvent.getAction();
@@ -235,7 +221,7 @@ public class GeoTabletMapViewThread extends Thread {
 				mapView.mySoundPool.stopAll();
 				mapView.mapviewer.stopspeak();
 				
-				Log.i("MotionEvent","ACTION_POINTER_UP");
+				//Log.i("MotionEvent","ACTION_POINTER_UP");
 				
 				break;
 				
@@ -243,7 +229,7 @@ public class GeoTabletMapViewThread extends Thread {
 				tampon0 = "";
 				mapView.mySoundPool.stopAll();
 				mapView.mapviewer.stopspeak();
-				Log.i("MotionEvent","ACTION_UP");
+				//Log.i("MotionEvent","ACTION_UP");
 				
 				break;
 			}
@@ -273,7 +259,7 @@ public class GeoTabletMapViewThread extends Thread {
 					}
 				}
 			}
-			writeToCsvSound("water");
+			//writeToCsvSound("water");
 		} else {
 			mapView.callback.inCallback = false;
 			if (isWater) {
@@ -297,7 +283,7 @@ public class GeoTabletMapViewThread extends Thread {
 						}
 					}
 				}
-				writeToCsvSound("water");
+				//writeToCsvSound("water");
 			} else {
 				mapView.mySoundPool.stopWater();
 			}
@@ -431,11 +417,11 @@ public class GeoTabletMapViewThread extends Thread {
 					}
 				}
 			}
-			try {
-				writeToCsvSound("highway");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+//			try {
+//				//writeToCsvSound("highway");
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
 			
 		} else {
 			mapView.mySoundPool.stopFootway();
@@ -462,11 +448,11 @@ public class GeoTabletMapViewThread extends Thread {
 					}
 				}
 			}
-			try {
-				writeToCsvSound("coast");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+//			try {
+//				writeToCsvSound("coast");
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
 			
 		} else {
 			mapView.mySoundPool.stopCoast();
@@ -496,11 +482,11 @@ public class GeoTabletMapViewThread extends Thread {
 					}
 				}
 			}
-			try {
-				writeToCsvSound("highway");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+//			try {
+//				writeToCsvSound("highway");
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
 			
 		} else {
 			mapView.mySoundPool.stopHighway();
@@ -527,7 +513,7 @@ public class GeoTabletMapViewThread extends Thread {
 					}
 				}
 			}
-			writeToCsvSound("water");
+			//writeToCsvSound("water");
 		} else {
 			mapView.mySoundPool.stopWater();
 		}
@@ -655,10 +641,10 @@ public class GeoTabletMapViewThread extends Thread {
 
 			if (finger0.x < finger1.x) {
 				finger1Droite = true;
-				Log.v("tyty", "1 est a droite");
+				//Log.v("tyty", "1 est a droite");
 			} else {
 				finger1Droite = false;
-				Log.v("tyty", "1 est a gauche");
+				//Log.v("tyty", "1 est a gauche");
 			}
 		}
 	}
@@ -674,7 +660,7 @@ public class GeoTabletMapViewThread extends Thread {
 			precision.get(i).y = (int) m.getY(i);
 
 			bouge.add(i);
-			Log.v("aaaaa9", "dedans " + i);
+			//Log.v("aaaaa9", "dedans " + i);
 		}
 	}
 
@@ -690,8 +676,8 @@ public class GeoTabletMapViewThread extends Thread {
 			try {
 				if ((test.get(i).x != m.getX(i) || test.get(i).y != m.getY(i))) {
 					precision(m, i);
-					Log.v("ppppp", "Px: " + precision.get(i).x + " Py: "
-							+ precision.get(i).y);
+				//	Log.v("ppppp", "Px: " + precision.get(i).x + " Py: "
+					//		+ precision.get(i).y);
 
 				}
 			} catch (Exception e) {
@@ -884,46 +870,46 @@ public class GeoTabletMapViewThread extends Thread {
 	
 	
 
-	private void writeToCsvSound(String sound){
-		pw.print("Son "+sound+" joué");
-		pw.print("\n");
-		pw.flush();
-	}
+//	private void writeToCsvSound(String sound){
+//		pw.print("Son "+sound+" joué");
+//		pw.print("\n");
+//		pw.flush();
+//	}
 	
-	private void writeToCsv(String time, int action, double x, double y) {
-		// Write to file for the first row
-		pw.print(time);
-		pw.print("\t | \t");
-		switch (action) {
-		case 0:
-			pw.print("Down");
-			break;
-		case 1:
-			pw.print("Up");
-			break;
-		case 2:
-			pw.print("Move");
-			break;
-		case 6:
-			pw.print("PointerUp");
-			break;
-		case 261:
-			pw.print("PointerDown");
-			break;
-		case 262:
-			pw.print("PointerUp");
-			break;
-		default:
-			pw.print(action);
-			break;
-		}
-		pw.print("\t | \t");
-		pw.print(x);
-		pw.print("\t | \t");
-		pw.print(y);
-		pw.print("\t | \t");
-		pw.print("\n");
-		// Flush the output to the file
-		pw.flush();
-	}
+//	private void writeToCsv(String time, int action, double x, double y) {
+//		// Write to file for the first row
+//		pw.print(time);
+//		pw.print("\t | \t");
+//		switch (action) {
+//		case 0:
+//			pw.print("Down");
+//			break;
+//		case 1:
+//			pw.print("Up");
+//			break;
+//		case 2:
+//			pw.print("Move");
+//			break;
+//		case 6:
+//			pw.print("PointerUp");
+//			break;
+//		case 261:
+//			pw.print("PointerDown");
+//			break;
+//		case 262:
+//			pw.print("PointerUp");
+//			break;
+//		default:
+//			pw.print(action);
+//			break;
+//		}
+//		pw.print("\t | \t");
+//		pw.print(x);
+//		pw.print("\t | \t");
+//		pw.print(y);
+//		pw.print("\t | \t");
+//		pw.print("\n");
+//		// Flush the output to the file
+//		pw.flush();
+//	}
 }
