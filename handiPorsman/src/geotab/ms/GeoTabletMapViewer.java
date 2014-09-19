@@ -245,7 +245,7 @@ public class GeoTabletMapViewer extends MapActivity{
 	public void onDestroy() {
 		// Don't forget to shutdown!
 //		 wl.release();
-		new File("/sdcard/porsmanHandiMap/porsman.map").delete();
+//		new File("/sdcard/porsmanHandiMap/porsman.map").delete();
 		
 		
 		if (tts != null) {
