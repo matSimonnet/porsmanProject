@@ -1,4 +1,4 @@
-package geotab.ms;
+package porsman.ms;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
 
-public class GeoTabletSoundPool {
+public class HandiPorsmanSoundPool {
 	private SoundPool soundPool;
 	private int soundIDTown;
 	private int soundIDForest;
@@ -22,7 +22,7 @@ public class GeoTabletSoundPool {
 	private int soundIDCoastline;
 	private int soundIDWater;
 	private boolean loaded = false;
-	private GeoTabletMapViewer mapviewer;
+	private HandiPorsmanMapViewer mapviewer;
 	private List<Integer> stopTown = new ArrayList<Integer>();
 	private List<Integer> stopForest = new ArrayList<Integer>();
 	private List<Integer> stopHighway = new ArrayList<Integer>();
@@ -33,7 +33,7 @@ public class GeoTabletSoundPool {
 	private List<Integer> stopWater = new ArrayList<Integer>();
 
 	@SuppressLint("NewApi")
-	public GeoTabletSoundPool(GeoTabletMapViewer mapviewer) {
+	public HandiPorsmanSoundPool(HandiPorsmanMapViewer mapviewer) {
 		this.mapviewer = mapviewer;
 		soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
 		soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
@@ -47,7 +47,7 @@ public class GeoTabletSoundPool {
 
 	public void loadSound(){
 		soundIDTown = soundPool.load(mapviewer, R.raw.town, 0);
-		soundIDForest = soundPool.load(mapviewer, R.raw.natural_wood_and_landuse_forest, 0);
+		//soundIDForest = soundPool.load(mapviewer, R.raw.natural_wood_and_landuse_forest, 0);
 		soundIDHighway = soundPool.load(mapviewer, R.raw.highway, 0);
 		soundIDFootway = soundPool.load(mapviewer, R.raw.step, 0);
 		soundIDBeach = soundPool.load(mapviewer, R.raw.beachlamp, 0);
@@ -58,7 +58,6 @@ public class GeoTabletSoundPool {
 	
 	public void unloadSound(){
 		soundPool.unload(soundIDTown);
-		soundPool.unload(soundIDForest);
 		soundPool.unload(soundIDHighway);
 		soundPool.unload(soundIDFootway);
 		soundPool.unload(soundIDFootway);

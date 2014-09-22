@@ -1,4 +1,4 @@
-package geotab.ms;
+package porsman.ms;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.mapsforge.map.reader.MapDatabaseCallback;
 
 import android.util.Log;
 
-public class GeoTabletMapDatabaseCallback implements MapDatabaseCallback {
+public class HandiPorsmanDatabaseCallback implements MapDatabaseCallback {
 	public List<PointOfInterest> Pois = new ArrayList<PointOfInterest>();
 	public boolean isLanduse;
 	public boolean isForest;
@@ -29,11 +29,11 @@ public class GeoTabletMapDatabaseCallback implements MapDatabaseCallback {
 	final List<Way> HighWays = new ArrayList<Way>();
 	public Way theway;
 	public byte zoomLevel;
-	private GeoTabletMapView mapView;
+	private HandiPosrsmanMapView mapView;
 	public List<Boolean> listIn = new ArrayList<Boolean>();
 	public boolean inCallback = false;
 
-	public GeoTabletMapDatabaseCallback(GeoTabletMapView m) {
+	public HandiPorsmanDatabaseCallback(HandiPosrsmanMapView m) {
 		this.mapView = m;
 	}
 

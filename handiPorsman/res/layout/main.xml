@@ -1,54 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" >
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="245dp" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <org.mapsforge.android.maps.MapView
+ android:id="@+id/mapView"
+ android:layout_width="fill_parent"
+ android:layout_height="fill_parent"
+ />
 
-        <Spinner
-            android:id="@+id/sp_zone"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:prompt="@string/zone" />
+    <!--sm.tb.geotabproj.MultiTouchView
+ android:id="@+id/touchview"
+ android:layout_width="fill_parent"
+ android:layout_height="fill_parent"
+ /-->       
 
-        <Spinner
-            android:id="@+id/sp_echelle"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:prompt="@string/echelle" />
-
-        <Spinner
-            android:id="@+id/sp_mode"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:prompt="@string/mode" />
-
-        <Button
-            android:id="@+id/btn_affiche_carte"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:contentDescription="@string/Affiche_carte"
-            android:text="@string/Affiche_carte" />
-
-        <geotab.ms.MultiChoiceSpinner
-            android:id="@+id/sp_filtre"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/sp_zone"
-            android:contentDescription="@string/filtre" />
-    </RelativeLayout>
-
-</ScrollView>
+</RelativeLayout>

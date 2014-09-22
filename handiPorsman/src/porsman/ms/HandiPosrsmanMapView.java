@@ -1,4 +1,4 @@
-package geotab.ms;
+package porsman.ms;
 
 import java.util.ArrayList;
 
@@ -10,32 +10,32 @@ import android.content.Context;
 import android.speech.tts.TextToSpeech;
 import android.view.MotionEvent;
 
-public class GeoTabletMapView extends MapView {
+public class HandiPosrsmanMapView extends MapView {
 
 	// Variables
-	public GeoTabletMapDatabaseCallback callback;
+	public HandiPorsmanDatabaseCallback callback;
 	public MapDatabase mapDatabase;
-	public GeoTabletMapViewer mapviewer;
-	public GeoTabletMapViewThread thread;
-	public GeoTabletSoundPool mySoundPool;
+	public HandiPorsmanMapViewer mapviewer;
+	public HandiPorsmanMapViewThread thread;
+	public HandiPorsmanSoundPool mySoundPool;
 	public ArrayList<String> filtre;
 	
 
 	@SuppressLint("NewApi")
-	public GeoTabletMapView(Context context) {
+	public HandiPosrsmanMapView(Context context) {
 		super(context);
 		
-		callback = new GeoTabletMapDatabaseCallback(this);
+		callback = new HandiPorsmanDatabaseCallback(this);
 		mapDatabase = this.getMapDatabase();
 		
 		// Si mapviewer appelle le mapview alors on connait le mapviewer
-		if (context instanceof GeoTabletMapViewer) {
-			mapviewer = (GeoTabletMapViewer) context;
-			mySoundPool = new GeoTabletSoundPool(mapviewer);
+		if (context instanceof HandiPorsmanMapViewer) {
+			mapviewer = (HandiPorsmanMapViewer) context;
+			mySoundPool = new HandiPorsmanSoundPool(mapviewer);
 		}
 		
 		// Create Thread and start it
-		thread = new GeoTabletMapViewThread(this);
+		thread = new HandiPorsmanMapViewThread(this);
 		thread.start();
 	}
 

@@ -1,4 +1,4 @@
-package geotab.ms;
+package porsman.ms;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -7,10 +7,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 
 import org.mapsforge.android.maps.MapActivity;
 import org.mapsforge.android.maps.MapController;
+import org.mapsforge.android.maps.overlay.ArrayCircleOverlay;
+import org.mapsforge.android.maps.overlay.OverlayCircle;
 import org.mapsforge.applications.android.geotablet.R;
 import org.mapsforge.core.GeoPoint;
 
@@ -18,7 +19,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.media.AudioManager;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
@@ -27,11 +32,10 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.Engine;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class GeoTabletMapViewer extends MapActivity{
+public class HandiPorsmanMapViewer extends MapActivity{
 
 //	PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 //	PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
@@ -40,11 +44,14 @@ public class GeoTabletMapViewer extends MapActivity{
 	private static int TTS_DATA_CHECK = 1;
 	private TextToSpeech tts = null;
 	private boolean ttsIsInit = false;
-	private GeoTabletMapView mapView;
+	private HandiPosrsmanMapView mapView;
 	private MapController mapController;
 	public ArrayList<String> itemsSelected;
 	private MediaPlayer mPlayer = null;
 	public String mode;
+	
+	private ArrayCircleOverlay circleOverlay; // -> the circles list 
+	private OverlayCircle circle; // -> the overlay
 
 	@SuppressWarnings("deprecation")
 	@SuppressLint({ "SdCardPath", "NewApi" })
@@ -53,30 +60,21 @@ public class GeoTabletMapViewer extends MapActivity{
 		super.onCreate(savedInstanceState);
 		
 		//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		//this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //getWindow().getDecorView().setSystemU2iVisibility(View.STATUS_BAR_HIDDEN);
 
 		// Init Text To Speech
 		initTextToSpeech();
-		
-		
-		
-		// Recuperation des informations de l'activity principale
-		Intent thisIntent = getIntent();
-		//String choice = thisIntent.getExtras().getString("myChoice");
 		String choice = "Porsman";
-		//byte zoomLevel = thisIntent.getExtras().getByte("zoomLevel");
-		byte zoomLevel = 18;
-		//mode = thisIntent.getExtras().getString("selectedMode");
+		byte zoomLevel = 19;
 		mode = "2 Doigts";
-		itemsSelected = thisIntent.getStringArrayListExtra("Liste");
 
 		/*
 		 * Affichage de la carte choisie.
 		 */
-		mapView = new GeoTabletMapView(this);
+		mapView = new HandiPosrsmanMapView(this);
 		mapController = mapView.getController();
 
 		mapView.setClickable(true);
@@ -125,36 +123,51 @@ public class GeoTabletMapViewer extends MapActivity{
 		/*
 		 * Centre la carte en fonction du lieu selectionne
 		 */
-		if (choice.equals("Plouarzel"))	
-			mapController.setCenter(new GeoPoint(48.4322, -4.7352));
-		if (choice.equals("Porsman"))	
+		//if (choice.equals("Plouarzel"))	
+		//	mapController.setCenter(new GeoPoint(48.4322, -4.7352));
+		//if (choice.equals("Porsman"))	
 			//mapController.setCenter(new GeoPoint(48.4426, -4.778));
-		    mapController.setCenter(new GeoPoint(48.4426, -4.77865));
-		else if (choice.equals("Moulin blanc"))
-			mapController.setCenter(new GeoPoint(48.3913, -4.4669));
-		else if (choice.equals("Trezien"))
-			mapController.setCenter(new GeoPoint(48.4268, -4.7867));
+		    mapController.setCenter(new GeoPoint(48.4426, -4.77875));
+		// else if (choice.equals("Moulin blanc"))
+		//	mapController.setCenter(new GeoPoint(48.3913, -4.4669));
+		//else if (choice.equals("Trezien"))
+		//	mapController.setCenter(new GeoPoint(48.4268, -4.7867));
 
-		setContentView(R.layout.main);
+		//setContentView(R.layout.main);
 		setContentView(mapView);
+        // create the paint objects for overlay circles
+        Paint circleDefaultPaintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
+        circleDefaultPaintFill.setStyle(Paint.Style.FILL);
+        circleDefaultPaintFill.setColor(Color.RED);
+        circleDefaultPaintFill.setAlpha(20);
+ 
+        Paint circleDefaultPaintOutline = new Paint(Paint.ANTI_ALIAS_FLAG);
+        circleDefaultPaintOutline.setStyle(Paint.Style.STROKE);
+        circleDefaultPaintOutline.setColor(Color.RED);
+        circleDefaultPaintOutline.setAlpha(128);
+        circleDefaultPaintOutline.setStrokeWidth(3);
+ 
+        // create the CircleOverlay
+        circleOverlay = new ArrayCircleOverlay(circleDefaultPaintFill,circleDefaultPaintOutline);
+
+        // add all overlays to the MapView
+        mapView.getOverlays().add(circleOverlay);
+        
+		//circle = new OverlayCircle(new GeoPoint(48.4426, -4.77865), 5f , "first overlay"); 
+		//circleOverlay.addCircle(circle);
 		
-		try {
-			Thread.sleep(2000);
-			mapView.mapviewer.speak("coucou 2", "0f");
-			Thread.sleep(2000);
-			mapView.mapviewer.speak("coucou 2", "0f");
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        LocationListener ll = new MyLocationListener();		
+		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
 
 	}
 
 	// Initialisation de la voix
 	private void initTextToSpeech() {
-		/*
-		 * Appel du moteur Text To Speech, avec pour action premiere la
-		 * verification de la presence des bibliotheques necessaires
-		 */
+		//
+		 //Appel du moteur Text To Speech, avec pour action premiere la
+		 // verification de la presence des bibliotheques necessaires
+		 //
 		Intent intent = new Intent(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
 		startActivityForResult(intent, TTS_DATA_CHECK);
 	}
@@ -187,8 +200,9 @@ public class GeoTabletMapViewer extends MapActivity{
 							//tts.setSpeechRate(1.1f);
 						}
 
-							mapView.mapviewer.speak("Bienvenue sur le sentier côtier adapté de porsman. "
-									+ "l'échelle : 1 centimetre sur la carte correspond à 20 mètres. ", "0f");
+							mapView.mapviewer.speak("Bienvenue sur la carte audio tactile de la plage de porsman. "
+									+ " hein centimetre sur la carte correspond à 20 mètres."
+									+ " Pour trouver le sentier adapté, chercher les bruits de pas.", "0f");
 					}
 					
 				});
@@ -273,4 +287,36 @@ public class GeoTabletMapViewer extends MapActivity{
 		mapView.thread.interrupt();
 		super.onDestroy();
 	}
+	
+	private class MyLocationListener implements LocationListener{
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void onProviderEnabled(String provider) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void onProviderDisabled(String provider) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void onLocationChanged(Location location) {
+			circle = new OverlayCircle(new GeoPoint(location.getLatitude(), 
+					location.getLongitude()), 5000f , "first overlay"); 
+			circleOverlay.addCircle(circle);
+			
+		}
+		
+		
+	}
+	
+	
 }

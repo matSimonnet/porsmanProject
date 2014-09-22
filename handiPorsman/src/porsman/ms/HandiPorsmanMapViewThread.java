@@ -1,4 +1,4 @@
-package geotab.ms;
+package porsman.ms;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -21,13 +21,13 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MotionEvent;
 
-public class GeoTabletMapViewThread extends Thread {
+public class HandiPorsmanMapViewThread extends Thread {
 
-	final float scale = (float)2.0;
-	final int SEUIL = 120;
+	final float scale = (float)1.8;
+	final int SEUIL = 80;
 	
 	// Variables
-	private GeoTabletMapView mapView;
+	private HandiPosrsmanMapView mapView;
 	private String valeurAnt = "";
 	private boolean dansFiltre = false;
 	public List<Tag> tags = new ArrayList<Tag>();
@@ -55,18 +55,13 @@ public class GeoTabletMapViewThread extends Thread {
 	public PrintWriter pw = null;
 	public FileWriter fw = null;
 	public String wayName = "";
-	private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 	
 
 	@SuppressLint("NewApi")
-	public GeoTabletMapViewThread(GeoTabletMapView mapView) {
-		
-		//Log.i("&&&&&&&&&&&&&&TalkBack Enabled Thread",""+ new GeoTabletActivity().talkback);
-
+	public HandiPorsmanMapViewThread(HandiPosrsmanMapView mapView) {
 		this.mapView = mapView;
 		mapView.setScaleX(scale);
 		mapView.setScaleY(scale);
-		
 	}
 
 	@SuppressLint({ "NewApi", "NewApi" })
@@ -74,15 +69,7 @@ public class GeoTabletMapViewThread extends Thread {
 
 		
 		if (mapView.mapviewer.mode.equals("2 Doigts")) {
-//			try {
-//				writeToCsv(sdf.format(Calendar.getInstance().getTime()),
-//						motionEvent.getAction(), motionEvent.getX(),
-//						motionEvent.getY());
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-			
-			
+
 			int action = motionEvent.getAction();
 			int actionCode = action & MotionEvent.ACTION_MASK;
 			
