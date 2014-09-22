@@ -24,10 +24,10 @@ import android.view.MotionEvent;
 public class HandiPorsmanMapViewThread extends Thread {
 
 	final float scale = (float)1.8;
-	final int SEUIL = 80;
+	final int SEUIL = 120;
 	
 	// Variables
-	private HandiPosrsmanMapView mapView;
+	private HandiPorsmanMapView mapView;
 	private String valeurAnt = "";
 	private boolean dansFiltre = false;
 	public List<Tag> tags = new ArrayList<Tag>();
@@ -55,15 +55,17 @@ public class HandiPorsmanMapViewThread extends Thread {
 	public PrintWriter pw = null;
 	public FileWriter fw = null;
 	public String wayName = "";
-	
+	boolean gpsIn = false;
 
 	@SuppressLint("NewApi")
-	public HandiPorsmanMapViewThread(HandiPosrsmanMapView mapView) {
+	public HandiPorsmanMapViewThread(HandiPorsmanMapView mapView) {
 		this.mapView = mapView;
 		mapView.setScaleX(scale);
 		mapView.setScaleY(scale);
 	}
 
+
+	
 	@SuppressLint({ "NewApi", "NewApi" })
 	public void run(MotionEvent motionEvent) {
 
@@ -72,6 +74,8 @@ public class HandiPorsmanMapViewThread extends Thread {
 
 			int action = motionEvent.getAction();
 			int actionCode = action & MotionEvent.ACTION_MASK;
+			Projection p = this.mapView.getProjection();
+
 			
 			switch (actionCode) {
 			
@@ -93,7 +97,10 @@ public class HandiPorsmanMapViewThread extends Thread {
 				generateExecuteQuery(motionEvent, mActivePointerId);
 
 				gestionWayNode(motionEvent, mActivePointerId);
-
+				
+				
+						//, longitude), y1, x2, y2) )
+				
 				if (mapView.callback.Pois.size() > 0 || mapView.callback.listIn.size() > 0 || Beach	) {
 					gestionTts(motionEvent, mActivePointerId);
 					//gestionTtsWay(motionEvent, mActivePointerId);
@@ -101,6 +108,17 @@ public class HandiPorsmanMapViewThread extends Thread {
 				}
 					
 				mapView.callback.Pois.clear();
+							
+				//GPS
+				/*
+				Point positionPixel = new Point();
+				p.toPixels(new GeoPoint(HandiPorsmanMapViewer.position.getLatitude(),HandiPorsmanMapViewer.position.getLongitude()), positionPixel);
+				
+				if (Distance(positionPixel.x, positionPixel.y, motionEvent.getX(0), motionEvent.getY(0)) < 20.0 ){
+					mapView.mapviewer.speak("vous êtes ici" , "0f");
+					Log.e(" DISTANCE ACTION DOWN" , " < 20 " );
+				}*/
+				
 				
 				break;
 			
@@ -189,7 +207,28 @@ public class HandiPorsmanMapViewThread extends Thread {
 
 					mapView.callback.Pois.clear();
 				}
+				
+				//GPS
+				Point positionPixelMove = new Point();
+				p.toPixels(new GeoPoint(HandiPorsmanMapViewer.position.getLatitude(),HandiPorsmanMapViewer.position.getLongitude()), positionPixelMove);
+				
+				if (Distance(positionPixelMove.x, positionPixelMove.y, motionEvent.getX(0), motionEvent.getY(0)) < 20.0 
+						&& gpsIn == false){
+					//mapView.mySoundPool.playTown(1.0f, 0.0f);
+					mapView.mapviewer.vibrate(100);
+					mapView.mapviewer.speak("vous êtes ici" , "0f");
+					Log.e(" DISTANCE_ACTION MOVE" , " < 20 " );
+					gpsIn = true;
+				}
+				
+				if (Distance(positionPixelMove.x, positionPixelMove.y, motionEvent.getX(0), motionEvent.getY(0)) > 20.0){
+					gpsIn = false  ; 
+				}
+				
+				
 				break;
+				
+				
 			case MotionEvent.ACTION_POINTER_UP:
 				
 //				if (motionEvent.getX() > 1300  || motionEvent.getX() < 600 
@@ -555,13 +594,12 @@ public class HandiPorsmanMapViewThread extends Thread {
 				if (mActivePointer == 1) {
 					tampon1 = "";
 				}
-				mapView.mapviewer.speakFlush("", "0f");
+				if (!gpsIn) mapView.mapviewer.speakFlush("", "0f");
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 	}
-	
 	
 	@SuppressLint("NewApi")
 	private void gestionTtsWay(MotionEvent m, int mActivePointer) {

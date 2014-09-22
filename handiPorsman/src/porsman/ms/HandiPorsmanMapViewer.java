@@ -27,24 +27,26 @@ import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.PowerManager;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.Engine;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 import android.view.Window;
-import android.view.WindowManager;
 
 public class HandiPorsmanMapViewer extends MapActivity{
 
-//	PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-//	PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
-
 	// Variables
+	//PowerManager pm = null;
+	//PowerManager.WakeLock wl = null;
+	
+	public static GeoPoint position = null;
+	
 	private static int TTS_DATA_CHECK = 1;
 	private TextToSpeech tts = null;
 	private boolean ttsIsInit = false;
-	private HandiPosrsmanMapView mapView;
+	private HandiPorsmanMapView mapView;
 	private MapController mapController;
 	public ArrayList<String> itemsSelected;
 	private MediaPlayer mPlayer = null;
@@ -58,6 +60,9 @@ public class HandiPorsmanMapViewer extends MapActivity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+		//wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
 		
 		//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -74,7 +79,7 @@ public class HandiPorsmanMapViewer extends MapActivity{
 		/*
 		 * Affichage de la carte choisie.
 		 */
-		mapView = new HandiPosrsmanMapView(this);
+		mapView = new HandiPorsmanMapView(this);
 		mapController = mapView.getController();
 
 		mapView.setClickable(true);
@@ -128,12 +133,7 @@ public class HandiPorsmanMapViewer extends MapActivity{
 		//if (choice.equals("Porsman"))	
 			//mapController.setCenter(new GeoPoint(48.4426, -4.778));
 		    mapController.setCenter(new GeoPoint(48.4426, -4.77875));
-		// else if (choice.equals("Moulin blanc"))
-		//	mapController.setCenter(new GeoPoint(48.3913, -4.4669));
-		//else if (choice.equals("Trezien"))
-		//	mapController.setCenter(new GeoPoint(48.4268, -4.7867));
 
-		//setContentView(R.layout.main);
 		setContentView(mapView);
         // create the paint objects for overlay circles
         Paint circleDefaultPaintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -159,7 +159,27 @@ public class HandiPorsmanMapViewer extends MapActivity{
         LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         LocationListener ll = new MyLocationListener();		
 		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
-
+		
+	}
+	
+	private class MyLocationListener implements LocationListener{
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {	
+		}
+		@Override
+		public void onProviderEnabled(String provider) {	
+		}
+		@Override
+		public void onProviderDisabled(String provider) {
+		}
+		@Override
+		public void onLocationChanged(Location location) {
+			circleOverlay.clear();
+			position = new GeoPoint(location.getLatitude(), location.getLongitude());
+			circle = new OverlayCircle(position, 5f , "first overlay"); 
+			circleOverlay.addCircle(circle);	
+			
+		}	
 	}
 
 	// Initialisation de la voix
@@ -200,16 +220,35 @@ public class HandiPorsmanMapViewer extends MapActivity{
 							//tts.setSpeechRate(1.1f);
 						}
 
-							mapView.mapviewer.speak("Bienvenue sur la carte audio tactile de la plage de porsman. "
-									+ " hein centimetre sur la carte correspond à 20 mètres."
-									+ " Pour trouver le sentier adapté, chercher les bruits de pas.", "0f");
+							mapView.mapviewer.speak("Bienvenue sur la carte audio tactile de la plage de porsman. ", "0f");
+									try {
+										Thread.sleep(5000);
+									} catch (InterruptedException e) {
+									}
+									
+							mapView.mapviewer.speak( "L'orientation de l'écran est tant portrait.", "0f");
+							
+									try {
+										Thread.sleep(5000);
+									} catch (InterruptedException e) {
+									}
+							
+							mapView.mapviewer.speak(" La largeur de la carte est de 80 mètres. ", "0f");
+							
+								try {
+									Thread.sleep(3000);
+								} catch (InterruptedException e) {
+								}
+									
+							mapView.mapviewer.speak(" Pour trouver le sentier adapté, chercher les bruits de pas.", "0f");	
+							
 					}
 					
 				});
-			}
-			
+			}	
 			
 		}
+		
 		// Si les bibliotheques TTS n'existent pas on les installent
 		else {
 			Intent installVoice = new Intent(Engine.ACTION_INSTALL_TTS_DATA);
@@ -263,6 +302,18 @@ public class HandiPorsmanMapViewer extends MapActivity{
 		v.vibrate(tempsVib);
 	}
 	
+	
+	
+	
+	
+	public GeoPoint getPosition() {
+		return position;
+	}
+
+	public void setPosition(GeoPoint position) {
+		this.position = position;
+	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -272,8 +323,8 @@ public class HandiPorsmanMapViewer extends MapActivity{
 	@Override
 	public void onDestroy() {
 		// Don't forget to shutdown!
-//		 wl.release();
-//		new File("/sdcard/porsmanHandiMap/porsman.map").delete();
+		//wl.release();
+		new File("/sdcard/porsmanHandiMap/porsman.map").delete();
 		
 		
 		if (tts != null) {
@@ -288,35 +339,5 @@ public class HandiPorsmanMapViewer extends MapActivity{
 		super.onDestroy();
 	}
 	
-	private class MyLocationListener implements LocationListener{
-		@Override
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void onProviderEnabled(String provider) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void onProviderDisabled(String provider) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void onLocationChanged(Location location) {
-			circle = new OverlayCircle(new GeoPoint(location.getLatitude(), 
-					location.getLongitude()), 5000f , "first overlay"); 
-			circleOverlay.addCircle(circle);
-			
-		}
-		
-		
-	}
-	
-	
+
 }

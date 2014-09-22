@@ -29,11 +29,11 @@ public class HandiPorsmanDatabaseCallback implements MapDatabaseCallback {
 	final List<Way> HighWays = new ArrayList<Way>();
 	public Way theway;
 	public byte zoomLevel;
-	private HandiPosrsmanMapView mapView;
+	private HandiPorsmanMapView mapView;
 	public List<Boolean> listIn = new ArrayList<Boolean>();
 	public boolean inCallback = false;
 
-	public HandiPorsmanDatabaseCallback(HandiPosrsmanMapView m) {
+	public HandiPorsmanDatabaseCallback(HandiPorsmanMapView m) {
 		this.mapView = m;
 	}
 
@@ -82,10 +82,10 @@ public class HandiPorsmanDatabaseCallback implements MapDatabaseCallback {
 					double x2 = mapView.thread.geopointReal.getLongitude();
 					double y2 = mapView.thread.geopointReal.getLatitude();
 					
-					if (Math.abs(x1 - x2) < 0.00015) 
+					if (Math.abs(x1 - x2) < 0.00005) //0.00015
 					{
 						//Log.i("way x1 - x2", "" + tt.value.toString());
-						if (Math.abs(y1 - y2) < 0.00015) 
+						if (Math.abs(y1 - y2) < 0.00005) 
 						{
 							//Log.i("way y1 - y2", "----" + tt.value.toString());
 							if (tt.key.equals("highway")&& ( tt.value.equals("residential") 
@@ -107,9 +107,9 @@ public class HandiPorsmanDatabaseCallback implements MapDatabaseCallback {
 						double y1 = wayNodes[0][i + 1] * Math.pow(10, -6);
 						double x2 = mapView.thread.geopointReal.getLongitude();
 						double y2 = mapView.thread.geopointReal.getLatitude();	
-						if (Math.abs(x1 - x2) < 0.0001) {
+						if (Math.abs(x1 - x2) < 0.00008) { //0.0001
 							//Log.i("way x1 - x2", "" + tt.value.toString());
-							if (Math.abs(y1 - y2) < 0.0001) 
+							if (Math.abs(y1 - y2) < 0.00008) 
 							{
 								//Log.i("way y1 - y2", "----" + tt.value.toString());
 								if (tt.key.equals("highway")&& tt.value.equals("footway"))

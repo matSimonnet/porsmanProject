@@ -10,7 +10,7 @@ import android.content.Context;
 import android.speech.tts.TextToSpeech;
 import android.view.MotionEvent;
 
-public class HandiPosrsmanMapView extends MapView {
+public class HandiPorsmanMapView extends MapView {
 
 	// Variables
 	public HandiPorsmanDatabaseCallback callback;
@@ -22,7 +22,7 @@ public class HandiPosrsmanMapView extends MapView {
 	
 
 	@SuppressLint("NewApi")
-	public HandiPosrsmanMapView(Context context) {
+	public HandiPorsmanMapView(Context context) {
 		super(context);
 		
 		callback = new HandiPorsmanDatabaseCallback(this);
