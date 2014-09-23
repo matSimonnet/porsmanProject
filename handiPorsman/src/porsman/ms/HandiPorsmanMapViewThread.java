@@ -208,6 +208,9 @@ public class HandiPorsmanMapViewThread extends Thread {
 					mapView.callback.Pois.clear();
 				}
 				
+				try {
+					
+
 				//GPS
 				Point positionPixelMove = new Point();
 				p.toPixels(new GeoPoint(HandiPorsmanMapViewer.position.getLatitude(),HandiPorsmanMapViewer.position.getLongitude()), positionPixelMove);
@@ -224,7 +227,10 @@ public class HandiPorsmanMapViewThread extends Thread {
 				if (Distance(positionPixelMove.x, positionPixelMove.y, motionEvent.getX(0), motionEvent.getY(0)) > 20.0){
 					gpsIn = false  ; 
 				}
-				
+
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
 				
 				break;
 				
@@ -455,21 +461,21 @@ public class HandiPorsmanMapViewThread extends Thread {
 		
 		if (isCoast) {
 			if (m.getPointerCount() == 1) {
-				mapView.mySoundPool.playCoast(0.5f, 0.5f);
+				mapView.mySoundPool.playCoast(0.25f, 0.25f);
 			} else {
 				if (m.getPointerCount() == 2) {
 					if (mActivePointer == 0) {
 						if (finger1Droite == true) {
-							mapView.mySoundPool.playCoast(1.0f, 0.0f);
+							mapView.mySoundPool.playCoast(0.5f, 0.0f);
 						} else if (finger1Droite == false) {
-							mapView.mySoundPool.playCoast(0.0f, 1.0f);
+							mapView.mySoundPool.playCoast(0.0f, 0.5f);
 						}
 					}
 					if (mActivePointer == 1) {
 						if (finger1Droite == true) {
-							mapView.mySoundPool.playCoast(0.0f, 1.0f);
+							mapView.mySoundPool.playCoast(0.0f, 0.5f);
 						} else if (finger1Droite == false) {
-							mapView.mySoundPool.playCoast(1.0f, 0.0f);
+							mapView.mySoundPool.playCoast(0.5f, 0.0f);
 						}
 					}
 				}
