@@ -363,13 +363,13 @@ public class HandiPorsmanMapViewThread extends Thread {
 			if (m.getPointerCount() == 1) {
 				if (Landuse)
 				{
-					mapView.mySoundPool.playTown(0.5f, 0.5f);
+					mapView.mySoundPool.playTown(0.15f, 0.15f);
 				}
 				if (Forest)
-					mapView.mySoundPool.playForest(0.5f, 0.5f);
+					mapView.mySoundPool.playForest(0.15f, 0.15f);
 				if (Beach)
 				{
-					mapView.mySoundPool.playBeach(0.5f, 0.5f);
+					mapView.mySoundPool.playBeach(0.15f, 0.15f);
 				}
 				
 					
@@ -378,35 +378,35 @@ public class HandiPorsmanMapViewThread extends Thread {
 					if (mActionPointer == 0) {
 						if (finger1Droite == true) {
 							if (Landuse)
-								mapView.mySoundPool.playTown(1.0f, 0.0f);
+								mapView.mySoundPool.playTown(0.3f, 0.0f);
 							if (Forest)
-								mapView.mySoundPool.playForest(0.5f, 0.0f);
+								mapView.mySoundPool.playForest(0.3f, 0.0f);
 							if (Beach)
-								mapView.mySoundPool.playBeach(0.5f, 0.0f);
+								mapView.mySoundPool.playBeach(0.3f, 0.0f);
 						} else if (finger1Droite == false) {
 							if (Landuse)
-								mapView.mySoundPool.playTown(0.0f, 1.0f);
+								mapView.mySoundPool.playTown(0.0f, 0.3f);
 							if (Forest)
-								mapView.mySoundPool.playForest(0.0f, 0.5f);
+								mapView.mySoundPool.playForest(0.0f, 0.3f);
 							if (Beach)
-								mapView.mySoundPool.playBeach(0.0f, 0.5f);
+								mapView.mySoundPool.playBeach(0.0f, 0.3f);
 						}
 					}
 					if (mActionPointer == 1) {
 						if (finger1Droite == true) {
 							if (Landuse)
-								mapView.mySoundPool.playTown(0.0f, 0.5f);
+								mapView.mySoundPool.playTown(0.0f, 0.3f);
 							if (Forest)
-								mapView.mySoundPool.playForest(0.0f, 0.5f);
+								mapView.mySoundPool.playForest(0.0f, 0.3f);
 							if (Beach)
-								mapView.mySoundPool.playBeach(0.0f, 0.5f);
+								mapView.mySoundPool.playBeach(0.0f, 0.3f);
 						} else if (finger1Droite == false) {
 							if (Landuse)
-								mapView.mySoundPool.playTown(0.5f, 0.0f);
+								mapView.mySoundPool.playTown(0.3f, 0.0f);
 							if (Forest)
-								mapView.mySoundPool.playForest(0.5f, 0.0f);
+								mapView.mySoundPool.playForest(0.3f, 0.0f);
 							if (Beach)
-								mapView.mySoundPool.playBeach(0.5f, 0.0f);
+								mapView.mySoundPool.playBeach(0.3f, 0.0f);
 						}
 					}
 				}
@@ -461,21 +461,21 @@ public class HandiPorsmanMapViewThread extends Thread {
 		
 		if (isCoast) {
 			if (m.getPointerCount() == 1) {
-				mapView.mySoundPool.playCoast(0.25f, 0.25f);
+				mapView.mySoundPool.playCoast(0.15f, 0.15f);
 			} else {
 				if (m.getPointerCount() == 2) {
 					if (mActivePointer == 0) {
 						if (finger1Droite == true) {
-							mapView.mySoundPool.playCoast(0.5f, 0.0f);
+							mapView.mySoundPool.playCoast(0.3f, 0.0f);
 						} else if (finger1Droite == false) {
-							mapView.mySoundPool.playCoast(0.0f, 0.5f);
+							mapView.mySoundPool.playCoast(0.0f, 0.3f);
 						}
 					}
 					if (mActivePointer == 1) {
 						if (finger1Droite == true) {
-							mapView.mySoundPool.playCoast(0.0f, 0.5f);
+							mapView.mySoundPool.playCoast(0.0f, 0.3f);
 						} else if (finger1Droite == false) {
-							mapView.mySoundPool.playCoast(0.5f, 0.0f);
+							mapView.mySoundPool.playCoast(0.3f, 0.0f);
 						}
 					}
 				}
@@ -495,21 +495,21 @@ public class HandiPorsmanMapViewThread extends Thread {
 		
 		if (isHighway) {
 			if (m.getPointerCount() == 1) {
-				mapView.mySoundPool.playHighway(0.5f, 0.5f);
+				mapView.mySoundPool.playHighway(0.15f, 0.15f);
 			} else {
 				if (m.getPointerCount() == 2) {
 					if (mActivePointer == 0) {
 						if (finger1Droite == true) {
-							mapView.mySoundPool.playHighway(1.0f, 0.0f);
+							mapView.mySoundPool.playHighway(0.3f, 0.0f);
 						} else if (finger1Droite == false) {
-							mapView.mySoundPool.playHighway(0.0f, 1.0f);
+							mapView.mySoundPool.playHighway(0.0f, 0.3f);
 						}
 					}
 					if (mActivePointer == 1) {
 						if (finger1Droite == true) {
-							mapView.mySoundPool.playHighway(0.0f, 1.0f);
+							mapView.mySoundPool.playHighway(0.0f, 0.3f);
 						} else if (finger1Droite == false) {
-							mapView.mySoundPool.playHighway(1.0f, 0.0f);
+							mapView.mySoundPool.playHighway(0.3f, 0.0f);
 						}
 					}
 				}
@@ -526,21 +526,21 @@ public class HandiPorsmanMapViewThread extends Thread {
 
 		if (isWater) {
 			if (m.getPointerCount() == 1) {
-				mapView.mySoundPool.playWater(0.5f, 0.5f);
+				mapView.mySoundPool.playWater(0.15f, 0.15f);
 			} else {
 				if (m.getPointerCount() == 2) {
 					if (mActivePointer == 0) {
 						if (finger1Droite == true) {
-							mapView.mySoundPool.playWater(1.0f, 0.0f);
+							mapView.mySoundPool.playWater(0.3f, 0.0f);
 						} else if (finger1Droite == false) {
-							mapView.mySoundPool.playWater(1.0f, 0.5f);
+							mapView.mySoundPool.playWater(0.0f, 0.3f);
 						}
 					}
 					if (mActivePointer == 1) {
 						if (finger1Droite == true) {
-							mapView.mySoundPool.playWater(0.0f, 1.0f);
+							mapView.mySoundPool.playWater(0.0f, 0.3f);
 						} else if (finger1Droite == false) {
-							mapView.mySoundPool.playWater(1.0f, 0.0f);
+							mapView.mySoundPool.playWater(0.3f, 0.0f);
 						}
 					}
 				}
