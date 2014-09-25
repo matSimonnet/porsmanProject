@@ -53,7 +53,7 @@ public class HandiPorsmanSoundPool {
 		soundIDBeach = soundPool.load(mapviewer, R.raw.beachlamp, 0);
 		soundIDCoast = soundPool.load(mapviewer, R.raw.coastline, 0);
 		soundIDCoastline = soundPool.load(mapviewer, R.raw.step, 0);
-		soundIDWater = soundPool.load(mapviewer, R.raw.coastlineold, 0);
+		soundIDWater = soundPool.load(mapviewer, R.raw.water, 0);
 	}
 	
 	public void unloadSound(){

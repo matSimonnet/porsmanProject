@@ -220,25 +220,48 @@ public class HandiPorsmanMapViewer extends MapActivity{
 							//tts.setSpeechRate(1.1f);
 						}
 
-							mapView.mapviewer.speak("Bienvenue sur la carte audio tactile de la plage de porsman. ", "0f");
-									try {
-										Thread.sleep(5000);
-									} catch (InterruptedException e) {
-									}
-									
-							mapView.mapviewer.speak( "L'orientation de l'écran est tant portrait.", "0f");
+							mapView.mapviewer.speak("Bienvenue sur la carte audio tactile du sentier adapté de la plage de porsman.", "0f");
+//									try {
+//										Thread.sleep(7000);
+//									} catch (InterruptedException e) {
+//									}
 							
-									try {
-										Thread.sleep(5000);
-									} catch (InterruptedException e) {
-									}
+									
+							mapView.mapviewer.speak( "... L'orientation de l'écran est tant portrait." + "... \"", "0f");
+							
+//									try {
+//										Thread.sleep(5000);
+//									} catch (InterruptedException e) {
+//									}
+							
+							mapView.mapviewer.speak( "... Le nord est en haut.", "0f");
+							
+//							try {
+//								Thread.sleep(1000);
+//							} catch (InterruptedException e) {
+//							}
+					
 							
 							mapView.mapviewer.speak(" La largeur de la carte est de 80 mètres. ", "0f");
 							
-								try {
-									Thread.sleep(3000);
-								} catch (InterruptedException e) {
-								}
+//								try {
+//									Thread.sleep(3000);
+//								} catch (InterruptedException e) {
+//								}
+							
+							mapView.mapviewer.speak(" Pour écouter les informations sur les points d'intérêt, garder le doigt dessus. ", "0f");
+							
+//							try {
+//								Thread.sleep(5000);
+//							} catch (InterruptedException e) {
+//							}
+								
+								mapView.mapviewer.speak(" Le sentier adapté est une boucle de 250 mètres équipés d'une main courante. ", "0f");
+								
+//								try {
+//									Thread.sleep(5000);
+//								} catch (InterruptedException e) {
+//								}
 									
 							mapView.mapviewer.speak(" Pour trouver le sentier adapté, chercher les bruits de pas.", "0f");	
 							

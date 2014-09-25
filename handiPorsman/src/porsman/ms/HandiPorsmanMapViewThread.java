@@ -47,6 +47,7 @@ public class HandiPorsmanMapViewThread extends Thread {
 	public boolean Landuse;
 	public boolean Forest;
 	public boolean Beach;
+	public boolean Water;
 	public boolean isHighway = false;
 	public boolean isFootway = false;
 	public boolean isCoast = false;
@@ -328,6 +329,7 @@ public class HandiPorsmanMapViewThread extends Thread {
 		Landuse = false;
 		Forest = false;
 		Beach = false;
+		Water = false;
 		isHighway = false;
 		isFootway = false;
 		isCoast = false;
@@ -359,6 +361,7 @@ public class HandiPorsmanMapViewThread extends Thread {
 
 	@SuppressLint("NewApi")
 	private void gestionSoundPool(MotionEvent m, int mActionPointer) {
+		
 		if (mapView.callback.listIn.contains(true)) {
 			if (m.getPointerCount() == 1) {
 				if (Landuse)
@@ -370,6 +373,10 @@ public class HandiPorsmanMapViewThread extends Thread {
 				if (Beach)
 				{
 					mapView.mySoundPool.playBeach(0.15f, 0.15f);
+				}
+				if (Water)
+				{
+					mapView.mySoundPool.playWater(0.15f, 0.15f);
 				}
 				
 					
@@ -383,6 +390,8 @@ public class HandiPorsmanMapViewThread extends Thread {
 								mapView.mySoundPool.playForest(0.3f, 0.0f);
 							if (Beach)
 								mapView.mySoundPool.playBeach(0.3f, 0.0f);
+							if (Water)
+								mapView.mySoundPool.playWater(0.3f, 0.0f);
 						} else if (finger1Droite == false) {
 							if (Landuse)
 								mapView.mySoundPool.playTown(0.0f, 0.3f);
@@ -390,6 +399,8 @@ public class HandiPorsmanMapViewThread extends Thread {
 								mapView.mySoundPool.playForest(0.0f, 0.3f);
 							if (Beach)
 								mapView.mySoundPool.playBeach(0.0f, 0.3f);
+							if (Water)
+								mapView.mySoundPool.playWater(0.0f, 0.3f);
 						}
 					}
 					if (mActionPointer == 1) {
@@ -400,6 +411,8 @@ public class HandiPorsmanMapViewThread extends Thread {
 								mapView.mySoundPool.playForest(0.0f, 0.3f);
 							if (Beach)
 								mapView.mySoundPool.playBeach(0.0f, 0.3f);
+							if (Water)
+								mapView.mySoundPool.playWater(0.0f, 0.3f);
 						} else if (finger1Droite == false) {
 							if (Landuse)
 								mapView.mySoundPool.playTown(0.3f, 0.0f);
@@ -407,6 +420,8 @@ public class HandiPorsmanMapViewThread extends Thread {
 								mapView.mySoundPool.playForest(0.3f, 0.0f);
 							if (Beach)
 								mapView.mySoundPool.playBeach(0.3f, 0.0f);
+							if (Water)
+								mapView.mySoundPool.playWater(0.3f, 0.0f);
 						}
 					}
 				}

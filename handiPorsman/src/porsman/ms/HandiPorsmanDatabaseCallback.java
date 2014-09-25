@@ -13,10 +13,12 @@ public class HandiPorsmanDatabaseCallback implements MapDatabaseCallback {
 	public boolean isLanduse;
 	public boolean isForest;
 	public boolean isBeach;
+	public boolean isWater;
 	boolean containsR = false;
 	boolean containsA = false;
 	public String nameLanduse;
 	public String nameBeach;
+	public String nameWater;
 	public String getNameBeach() {
 		return nameBeach;
 	}
@@ -26,6 +28,7 @@ public class HandiPorsmanDatabaseCallback implements MapDatabaseCallback {
 	float[][] polygon;
 	boolean inLanduse;
 	boolean inBeach;
+	boolean inWater;
 	final List<Way> HighWays = new ArrayList<Way>();
 	public Way theway;
 	public byte zoomLevel;
@@ -107,9 +110,9 @@ public class HandiPorsmanDatabaseCallback implements MapDatabaseCallback {
 						double y1 = wayNodes[0][i + 1] * Math.pow(10, -6);
 						double x2 = mapView.thread.geopointReal.getLongitude();
 						double y2 = mapView.thread.geopointReal.getLatitude();	
-						if (Math.abs(x1 - x2) < 0.00008) { //0.0001
+						if (Math.abs(x1 - x2) < 0.000055) { //0.0001
 							//Log.i("way x1 - x2", "" + tt.value.toString());
-							if (Math.abs(y1 - y2) < 0.00008) 
+							if (Math.abs(y1 - y2) < 0.000055) 
 							{
 								//Log.i("way y1 - y2", "----" + tt.value.toString());
 								if (tt.key.equals("highway")&& tt.value.equals("footway"))
@@ -129,9 +132,9 @@ public class HandiPorsmanDatabaseCallback implements MapDatabaseCallback {
 						double y1 = wayNodes[0][i + 1] * Math.pow(10, -6);
 						double x2 = mapView.thread.geopointReal.getLongitude();
 						double y2 = mapView.thread.geopointReal.getLatitude();	
-						if (Math.abs(x1 - x2) < 0.0002) {
+						if (Math.abs(x1 - x2) < 0.0001) {
 							//Log.i("way x1 - x2", "" + tt.value.toString());
-							if (Math.abs(y1 - y2) < 0.0002) 
+							if (Math.abs(y1 - y2) < 0.0001) 
 							{
 								//Log.i("way y1 - y2", "----" + tt.value.toString());
 								if (tt.key.equals("natural")&& tt.value.equals("coastline"))
@@ -151,9 +154,9 @@ public class HandiPorsmanDatabaseCallback implements MapDatabaseCallback {
 						double y1 = wayNodes[0][i + 1] * Math.pow(10, -6);
 						double x2 = mapView.thread.geopointReal.getLongitude();
 						double y2 = mapView.thread.geopointReal.getLatitude();	
-						if (Math.abs(x1 - x2) < 0.00015) {
+						if (Math.abs(x1 - x2) < 0.0001) {
 							//Log.i("way x1 - x2", "" + tt.value.toString());
-							if (Math.abs(y1 - y2) < 0.00015) 
+							if (Math.abs(y1 - y2) < 0.0001) 
 							{
 								//Log.i("way y1 - y2", "----" + tt.value.toString());
 									if (tt.key.equals("highway"))
@@ -241,7 +244,7 @@ public class HandiPorsmanDatabaseCallback implements MapDatabaseCallback {
 					nameBeach = null;
 				Log.v("TagMyWay : ", t.key + " : " + t.value);
 			}
-			Log.v("TagMyWay : ", "nbre Noeuds : " + wayNodes[0].length);
+			Log.v("TagMyWay BEACH: ", "nbre Noeuds : " + wayNodes[0].length);
 
 			inBeach = false;
 
@@ -270,6 +273,63 @@ public class HandiPorsmanDatabaseCallback implements MapDatabaseCallback {
 			listIn.add(inBeach);
 			Log.v("TagMyWay : ", "intersec : " + inBeach);
 		}
+		
+		
+		
+		// water
+		
+		isWater = false;
+		
+		for (Tag t : tags) {
+
+			if (t.key.equals("water") && t.value.equals("sea")) 
+			{
+				isWater = true;
+				Log.v("WATER = ", isWater + "");
+				
+			}
+		}
+		
+		if (isWater) {
+			for (Tag t : tags) {
+				if (t.key.equals("name")) {
+					mapView.thread.wayName  = t.value;
+					//Log.i("speak2 : ", "" + mapView.thread.wayName);
+				} else
+					nameWater = null;
+				Log.v("TagMyWay : ", t.key + " : " + t.value);
+			}
+			Log.v("WATER TagMyWay : ", "nbre Noeuds water: " + wayNodes[0].length);
+
+			inWater = false;
+
+			int j = wayNodes[0].length - 2;
+			for (int i = 0; i < wayNodes[0].length; i = i + 2) {
+				float polyXi = (float) (wayNodes[0][i] * Math.pow(10, -6));
+				float polyYi = (float) (wayNodes[0][i + 1] * Math.pow(10, -6));
+				float polyXj = (float) (wayNodes[0][j] * Math.pow(10, -6));
+				float polyYj = (float) (wayNodes[0][j + 1] * Math.pow(10, -6));
+				float x = (float) this.mapView.thread.geopointReal.getLongitude();
+				float y = (float) this.mapView.thread.geopointReal.getLatitude();
+				if (polyYi < y && polyYj >= y || polyYj < y && polyYi >= y) {
+					if (polyXi + (y - polyYi) / (polyYj - polyYi)
+							* (polyXj - polyXi) < x)
+						inWater = !inWater;
+				}
+
+				j = i;
+				//Log.i("TagMyWay : ", "nbre Noeuds+++++ : " + "latitude : "+ (wayNodes[0][i + 1] * Math.pow(10, -6))+ " longitude : " + (wayNodes[0][i] * Math.pow(10, -6)));
+			}
+			if (inWater)
+				this.mapView.thread.trouve = true;
+			if (inWater == isWater)
+				mapView.thread.Water = isWater;  
+			Log.i("WAY-TAG", "isWATER");
+			listIn.add(inWater);
+			Log.v("WATER TagMyWay : ", "intersec : " + inWater);
+		}
+		
+		
 		
 		
 		
