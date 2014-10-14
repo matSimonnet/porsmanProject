@@ -19,6 +19,7 @@ public class HandiPorsmanDatabaseCallback implements MapDatabaseCallback {
 	public String nameLanduse;
 	public String nameBeach;
 	public String nameWater;
+	
 	public String getNameBeach() {
 		return nameBeach;
 	}
@@ -227,11 +228,22 @@ public class HandiPorsmanDatabaseCallback implements MapDatabaseCallback {
 		
 		for (Tag t : tags) {
 
+			if (t.key.equals("natural") && t.value.equals("sea")) 
+			{
+				
+				isWater = true;
+				Log.v("WATER = ", isWater + " = TRUE !!!!!!");
+				
+			}
+			
 			if (t.key.equals("natural") && t.value.equals("beach")) 
 			{
 				
 				isBeach = true;
 			}
+			
+
+			
 		}
 
 
@@ -280,15 +292,18 @@ public class HandiPorsmanDatabaseCallback implements MapDatabaseCallback {
 		
 		isWater = false;
 		
-		for (Tag t : tags) {
-
-			if (t.key.equals("water") && t.value.equals("sea")) 
-			{
-				isWater = true;
-				Log.v("WATER = ", isWater + "");
-				
-			}
-		}
+		
+		
+//		for (Tag t : tags) {
+//			Log.v("isWater : ", " COUCOU for tag");
+//			if (t.key.equals("water") && t.value.equals("sea")) 
+//			{
+//				
+//				isWater = true;
+//				Log.v("WATER = ", isWater + "");
+//				
+//			}
+//		}
 		
 		if (isWater) {
 			for (Tag t : tags) {
