@@ -33,6 +33,8 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.Engine;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Window;
 
 public class HandiPorsmanMapViewer extends MapActivity{
@@ -66,7 +68,7 @@ public class HandiPorsmanMapViewer extends MapActivity{
 		
 		//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		//this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //getWindow().getDecorView().setSystemU2iVisibility(View.STATUS_BAR_HIDDEN);
 
@@ -220,50 +222,7 @@ public class HandiPorsmanMapViewer extends MapActivity{
 							//tts.setSpeechRate(1.1f);
 						}
 
-							mapView.mapviewer.speak("Bienvenue sur la carte audio tactile du sentier adapté de la plage de porsman.", "0f");
-//									try {
-//										Thread.sleep(7000);
-//									} catch (InterruptedException e) {
-//									}
-							
-									
-							mapView.mapviewer.speak( "... L'orientation de l'écran est tant portrait." + "... \"", "0f");
-							
-//									try {
-//										Thread.sleep(5000);
-//									} catch (InterruptedException e) {
-//									}
-							
-							mapView.mapviewer.speak( "... Le nord est en haut.", "0f");
-							
-//							try {
-//								Thread.sleep(1000);
-//							} catch (InterruptedException e) {
-//							}
-					
-							
-							mapView.mapviewer.speak(" La largeur de la carte est de 80 mètres. ", "0f");
-							
-//								try {
-//									Thread.sleep(3000);
-//								} catch (InterruptedException e) {
-//								}
-							
-							mapView.mapviewer.speak(" Pour écouter les informations sur les points d'intérêt, garder le doigt dessus. ", "0f");
-							
-//							try {
-//								Thread.sleep(5000);
-//							} catch (InterruptedException e) {
-//							}
-								
-								mapView.mapviewer.speak(" Le sentier adapté est une boucle de 250 mètres équipés d'une main courante. ", "0f");
-								
-//								try {
-//									Thread.sleep(5000);
-//								} catch (InterruptedException e) {
-//								}
-									
-							mapView.mapviewer.speak(" Pour trouver le sentier adapté, chercher les bruits de pas.", "0f");	
+							mapView.mapviewer.speak("Bienvenue sur la carte audio tactile du sentier adapté de la plage de porsman.", "0f");	
 							
 					}
 					
@@ -343,6 +302,31 @@ public class HandiPorsmanMapViewer extends MapActivity{
 		mapView.mySoundPool.loadSound();
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem Item){
+		switch (Item.getItemId()) {
+		case R.id.item_help:
+			Intent help = new Intent(HandiPorsmanMapViewer.this,Help.class);
+			startActivity(help);
+			break;
+		default:
+			break;
+		}
+		return false;
+	}
+	
+	
+	
+	
+	
 	@Override
 	public void onDestroy() {
 		// Don't forget to shutdown!
