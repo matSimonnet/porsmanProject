@@ -1,21 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    
+    android:layout_height="match_parent" 
+    android:orientation="vertical"
+    >
 
-            		<TextView
-    		android:id="@+id/direction_string"
+       	<TextView
     		android:layout_width="fill_parent" 
-    		android:layout_height="fill_parent" 
-	        android:gravity="center"
+    		android:layout_height="wrap_content" 
+	        android:gravity="left"
 	        android:textSize="30dp"
-	        android:text= "L'orientation de l'écran est tant portrait.
-	        Le nord est en haut. 
-	        La largeur de la carte est de 80 mètres. 
-	        Pour écouter les informations sur les points d'intérêt, garder le doigt dessus. 
-	        Le sentier adapté est une boucle de 250 mètres équipés d'une main courante. 
-	        Pour trouver le sentier adapté, chercher les bruits de pas" />
-</RelativeLayout>
+	        android:text= "L'orientation de l'écran est en portrait."
+	        />
+       	
+      	<TextView
+    		android:layout_width="fill_parent" 
+    		android:layout_height="wrap_content" 
+	        android:gravity="left"
+	        android:textSize="30dp"
+	        android:text= "Le nord est en haut." 
+	       	/>
+      	<TextView
+    		android:layout_width="fill_parent" 
+    		android:layout_height="wrap_content" 
+	        android:gravity="left"
+	        android:textSize="30dp"
+	        android:text= "La largeur de la carte est de 80 mètres." 
+	       	/>
+      	<TextView
+    		android:layout_width="fill_parent" 
+    		android:layout_height="wrap_content" 
+	        android:gravity="left"
+	        android:textSize="30dp"
+	        android:text= "Pour écouter les informations sur les points d'intérêt, garder le doigt dessus." 
+	       	/>
+      	<TextView
+    		android:layout_width="fill_parent" 
+    		android:layout_height="wrap_content" 
+	        android:gravity="left"
+	        android:textSize="30dp"
+	        android:text= "Le sentier adapté est une boucle de 250 mètres équipés d'une main courante."    	
+	    	/>	
+</LinearLayout>
