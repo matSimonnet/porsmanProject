@@ -5,6 +5,7 @@
     <string name="app_name">handiPorsman</string>
     <string name="button_name">Afficher la carte</string>
     <string name="help">Aide</string>
+    <string name="map">Retour à la carte</string>
     
     <string-array name="map_choice">
         <item>Porsman</item>
